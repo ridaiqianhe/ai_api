@@ -56,7 +56,7 @@ modify_and_restart() {
 
   docker stop $CONTAINER_NAME
   docker rm $CONTAINER_NAME
-  docker run -d --name $CONTAINER_NAME -p $NEW_PORT:8000 -v $(pwd)/ai_api:/ai_api $IMAGE_NAME gunicorn app:app -c gunicorn.conf.py --bind 0.0.0.0:$NEW_PORT
+  docker run -d --name $CONTAINER_NAME -p $NEW_PORT:8000 -v $(pwd):/ai_api $IMAGE_NAME gunicorn app:app -c gunicorn.conf.py --bind 0.0.0.0:$NEW_PORT
 }
 
 # 选项4: 查看日志
