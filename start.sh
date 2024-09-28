@@ -3,7 +3,7 @@
 # 默认设置
 IMAGE_NAME="ai_api"
 CONTAINER_NAME="ai_api"
-LOG_DIR="./ai_api/logs"
+LOG_DIR="./logs"
 LOG_FILE="${LOG_DIR}/gunicorn.log"
 ERROR_LOG_FILE="${LOG_DIR}/gunicorn_error.log"
 MAX_LOG_SIZE=1048576  # 1GB in KB
@@ -23,9 +23,17 @@ check_log_size() {
 
 # 选项1: 安装并运行容器
 install_container() {
-  echo "安装并运行Docker容器..."
+  read -p "请输入要使用的端口号 (默认 8000): " PORT
+
+  if [ -z "$PORT" ]; then
+    PORT=8000
+  fi
+
+  echo "安装并运行Docker容器，端口号: $PORT..."
+  
   docker build -t $IMAGE_NAME .
-  docker run -d --name $CONTAINER_NAME -p 8000:8000 -v $(pwd)/ai_api:/ai_api $IMAGE_NAME
+  
+  docker run -d --name $CONTAINER_NAME -p $PORT:8000 -v $(pwd):/ai_api $IMAGE_NAME
 }
 
 # 选项2: 停止并卸载容器与镜像
