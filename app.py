@@ -20,7 +20,7 @@ def gpt_completion(url, token, user_content, system_content, temperature=0.6):
         "Content-Type": "application/json"
     }
     data = {
-        "model": "gpt-4o",
+        "model": "gpt-4o-mini",
         "messages": [
             {
                 "role": "system",
@@ -36,7 +36,7 @@ def gpt_completion(url, token, user_content, system_content, temperature=0.6):
 
     response = requests.post(url, headers=headers, json=data)
     if response.status_code == 200:
-        return response.json()
+        return response.text
     else:
         raise HTTPException(status_code=response.status_code, detail="Request failed")
 
