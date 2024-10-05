@@ -38,7 +38,7 @@ def gpt_completion(url, token, user_content, system_content, temperature=0.6):
     if response.status_code == 200:
         return response.text
     else:
-        raise HTTPException(status_code=response.status_code, detail="Request failed")
+        raise HTTPException(status_code=response.status_code, detail={"error": "Request failed", "errormsg": response.text}))
 
 # 定义一个 POST 请求的路由
 @app.post("/chat")
