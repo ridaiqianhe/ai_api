@@ -36,9 +36,12 @@ def gpt_completion(url, token, user_content, system_content, temperature=0.6):
 
     response = requests.post(url, headers=headers, json=data)
     if response.status_code == 200:
-        return response.text
+        try:
+            return response.text
+        except ValueError:
+            raise HTTPException(status_code=500, detail="Invalid response format from GPT API")
     else:
-        raise HTTPException(status_code=response.status_code, detail={"error": "Request failed", "errormsg": response.text}))
+        raise HTTPException(status_code=response.status_code, detail={"error": "Request failed", "errormsg": response.text})
 
 # 定义一个 POST 请求的路由
 @app.post("/chat")
