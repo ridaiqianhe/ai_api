@@ -14,13 +14,13 @@ class GPTRequest(BaseModel):
     temperature: float = 0.6
 
 # 定义与 GPT API 通信的函数
-def gpt_completion(url, token, user_content, system_content, temperature=0.6):
+def gpt_completion(url, token, user_content, system_content, temperature=0.6,model = "gpt-4o-mini"):
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
     }
     data = {
-        "model": "gpt-4o-mini",
+        "model": model,
         "messages": [
             {
                 "role": "system",
